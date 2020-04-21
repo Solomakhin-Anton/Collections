@@ -12,6 +12,7 @@ import ru.netology.exception.NotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +29,7 @@ class IssueSingleRepositoryTest {
     @Test
     void shouldFindAll() {
         ArrayList<Issue> actual = issueRepository.findAll();
-        ArrayList<Issue> expected = new ArrayList<Issue>(Collections.singletonList(issue1));
+        List<Issue> expected = Collections.singletonList(issue1);
 
         assertEquals(expected, actual);
     }

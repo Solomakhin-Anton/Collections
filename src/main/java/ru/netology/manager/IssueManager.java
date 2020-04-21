@@ -24,7 +24,7 @@ public class IssueManager {
         repository.save(issue);
     }
 
-    public List<Issue> findAllOpen(IssueComparator comparator) {
+    public List<Issue> findAllOpen() {
         List<Issue> temp = new ArrayList<>();
         for (Issue issue : repository.findAll()) {
             if (issue.getStatus().equals(Status.OPEN)) {
@@ -35,7 +35,7 @@ public class IssueManager {
         return temp;
     }
 
-    public List<Issue> findAllClosed(IssueComparator comparator) {
+    public List<Issue> findAllClosed() {
         List<Issue> temp = new ArrayList<>();
         for (Issue issue : repository.findAll()) {
             if (issue.getStatus().equals(CLOSED)) {
@@ -44,14 +44,6 @@ public class IssueManager {
             }
         }
         return temp;
-    }
-
-    public void closeById(int id) {
-        repository.closeById(id);
-    }
-
-    public void openById(int id) {
-        repository.closeById(id);
     }
 
     public List<Issue> filterByAuthor(Predicate<Issue> predicate) {
@@ -65,10 +57,10 @@ public class IssueManager {
     }
 
 
-    public List<Issue> filterByLabel(Label label, IssueComparator comparator) {
+    public List<Issue> filterByLabel(Predicate<Issue> predicate) {
         List<Issue> temp = new ArrayList<>();
         for (Issue issue : repository.findAll()) {
-            if (issue.getLabel().equals(label)) {
+            if (predicate.test(issue)) {
                 temp.add(issue);
             }
         }

@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IssueManagerTest {
 
-    IssueRepository repository = new IssueRepository();
-    IssueManager issueManager = new IssueManager(repository);
-    IssueComparator comparator = new IssueComparator();
+    private IssueRepository repository = new IssueRepository();
+    private IssueManager issueManager = new IssueManager(repository);
+    private IssueComparator comparator = new IssueComparator();
 
     private Issue issue1 = new Issue(1, "name1", Status.OPEN, "author1", Label.BUG, Arrays.asList("project1", "project2"), "5.7 M1", new Assignee(4, "Name4", "Surname4"), "10.01.2020", 1, 0);
     private Issue issue2 = new Issue(2, "name2", Status.CLOSED, "author2", Label.FEATURE_REQUEST, Collections.singletonList("project3"), "5.7 Backlog", new Assignee(3, "Name3", "Surname3"), "17.02.2020", 9, 3);
@@ -38,14 +38,14 @@ class IssueManagerTest {
 
     @Test
     void shouldFindAllOpen() {
-        List<Issue> actual = issueManager.findAllOpen(comparator);
+        List<Issue> actual = issueManager.findAllOpen();
         List<Issue> expected = Arrays.asList(issue1, issue3, issue5);
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldFindAllClosed() {
-        List<Issue> actual = issueManager.findAllClosed(comparator);
+        List<Issue> actual = issueManager.findAllClosed();
         List<Issue> expected = Arrays.asList(issue2, issue4, issue6);
         assertEquals(expected, actual);
     }
@@ -66,14 +66,14 @@ class IssueManagerTest {
 
     @Test
     void shouldFilterByLabel() {
-        List<Issue> actual = issueManager.filterByLabel(Label.BUG, comparator);
+        List<Issue> actual = issueManager.filterByLabel(issue -> issue.getLabel().equals(Label.BUG));
         List<Issue> expected = Arrays.asList(issue1, issue4);
         assertEquals(expected, actual);
     }
 
     @Test
     void shouldFilterByLabelIfNoExist() {
-        List<Issue> actual = issueManager.filterByLabel(Label.DOC, comparator);
+        List<Issue> actual = issueManager.filterByLabel(issue -> issue.getLabel().equals(Label.DOC));
         List<Issue> expected = new ArrayList<>();
         assertEquals(expected, actual);
     }

@@ -17,9 +17,9 @@ public class Issue {
     private Status status;
     private String author;
     private Label label;
-    private Set<String> projects = new HashSet<String>();
+    private Set<String> projects = new HashSet<>();
     private String milestone;
-    private Set<Assignee> setAssignee;
+    private Set<Assignee> setAssignee = new HashSet<>();
     private String date;
     private int commentsCount;
     private int pullRequestCount;
@@ -31,7 +31,6 @@ public class Issue {
         this.author = author;
         this.label = label;
         this.milestone = milestone;
-        this.setAssignee = new HashSet<>();
         this.setAssignee.add(assignee);
         this.date = date;
         this.commentsCount = commentsCount;

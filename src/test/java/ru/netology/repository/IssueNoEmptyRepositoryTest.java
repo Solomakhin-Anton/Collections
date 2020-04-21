@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Assignee;
@@ -11,6 +12,7 @@ import ru.netology.exception.NotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +40,7 @@ class IssueRepositoryNoEmptyTest {
     @Test
     void shouldFindAll() {
         ArrayList<Issue> actual = issueRepository.findAll();
-        ArrayList<Issue> expected = new ArrayList<Issue>(Arrays.asList(issue1, issue2, issue3, issue4, issue5, issue6));
+        List<Issue> expected = Arrays.asList(issue1, issue2, issue3, issue4, issue5, issue6);
 
         assertEquals(expected, actual);
     }
@@ -53,6 +55,20 @@ class IssueRepositoryNoEmptyTest {
     @Test
     void shouldThrowException() {
         assertThrows(NotFoundException.class, () -> issueRepository.findById(8));
+    }
+
+    @Test
+    void shouldOpenById() {
+        issueRepository.openById(1);
+        Issue byId = issueRepository.findById(1);
+        assertSame(byId.getStatus(), Status.OPEN);
+    }
+
+    @Test
+    void shouldCloseById() {
+        issueRepository.closeById(2);
+        Issue byId = issueRepository.findById(2);
+        assertSame(byId.getStatus(), Status.CLOSED);
     }
 
 }
